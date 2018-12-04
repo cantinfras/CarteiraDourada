@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.eltonhoracio.carteiradourada.domain.TipoMulta;
 import com.eltonhoracio.carteiradourada.repositories.TipoMultaRepository;
+import com.eltonhoracio.carteiradourada.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class TipoMultaService {
@@ -16,7 +17,8 @@ public class TipoMultaService {
 	
 	public TipoMulta find(Integer id) {
 		Optional <TipoMulta> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + " Tipo: " + TipoMulta.class.getName()));
 	}
 
 }

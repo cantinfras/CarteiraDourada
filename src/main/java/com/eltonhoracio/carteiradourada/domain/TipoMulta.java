@@ -1,11 +1,15 @@
 package com.eltonhoracio.carteiradourada.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 
 @Entity
 public class TipoMulta implements Serializable{
@@ -16,17 +20,21 @@ public class TipoMulta implements Serializable{
 	private Integer id;
 	private String codigo;
 	private String descricao;
+	private String infrator;
 	private Integer pontos;
 	
-	public TipoMulta() {
-		
+	@OneToMany(mappedBy="tipo")
+	private List<Multa> multas = new ArrayList<>();
+	
+	public TipoMulta() {	
 	}
 
-	public TipoMulta(Integer id, String codigo, String descricao, Integer pontos) {
+	public TipoMulta(Integer id, String codigo, String descricao, String infrator, Integer pontos) {
 		super();
 		this.id = id;
 		this.codigo = codigo;
 		this.descricao = descricao;
+		this.infrator = infrator;
 		this.pontos = pontos;
 	}
 
@@ -53,6 +61,14 @@ public class TipoMulta implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	public String getInrator() {
+		return infrator;
+	}
+
+	public void setInfrator(String infrator) {
+		this.infrator = infrator;
+	}
 
 	public Integer getPontos() {
 		return pontos;
@@ -60,6 +76,19 @@ public class TipoMulta implements Serializable{
 
 	public void setPontos(Integer pontos) {
 		this.pontos = pontos;
+	}
+	
+
+	public List<Multa> getMultas() {
+		return multas;
+	}
+
+	public void setMultas(List<Multa> multas) {
+		this.multas = multas;
+	}
+
+	public String getInfrator() {
+		return infrator;
 	}
 
 	@Override
