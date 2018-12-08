@@ -1,6 +1,7 @@
 package com.eltonhoracio.carteiradourada.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Multa implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -16,22 +20,28 @@ public class Multa implements Serializable{
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-	private String data;
+	private Date data;
 	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="tipoMmulta_id")
 	private TipoMulta tipo;
 	
-	
+	@JsonBackReference
+	@ManyToOne
+	@JoinColumn(name="pessoa_id")
+	private Pessoa pessoa;
 	
 	public Multa() {
 	}
 
-	public Multa(Integer id, String data, TipoMulta tipo) {
+	public Multa(Integer id, Date data, TipoMulta tipo, Pessoa pessoa) {
 		super();
 		this.id = id;
 		this.data = data;
 		this.tipo = tipo;
+		this.pessoa = pessoa;
+
 	}
 
 	public Integer getId() {
@@ -42,11 +52,11 @@ public class Multa implements Serializable{
 		this.id = id;
 	}
 
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 	
@@ -57,6 +67,14 @@ public class Multa implements Serializable{
 
 	public void setTipo(TipoMulta tipo) {
 		this.tipo = tipo;
+	}
+	
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
 	@Override

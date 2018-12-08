@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 public class TipoMulta implements Serializable{
@@ -23,6 +25,7 @@ public class TipoMulta implements Serializable{
 	private String infrator;
 	private Integer pontos;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="tipo")
 	private List<Multa> multas = new ArrayList<>();
 	
@@ -61,8 +64,8 @@ public class TipoMulta implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
-	public String getInrator() {
+
+	public String getInfrator() {
 		return infrator;
 	}
 
@@ -85,10 +88,6 @@ public class TipoMulta implements Serializable{
 
 	public void setMultas(List<Multa> multas) {
 		this.multas = multas;
-	}
-
-	public String getInfrator() {
-		return infrator;
 	}
 
 	@Override
