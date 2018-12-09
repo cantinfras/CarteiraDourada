@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Pessoa implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -26,17 +24,12 @@ public class Pessoa implements Serializable{
 	private String email;
 	private Integer pontuacao;
 	
-	@JsonManagedReference
 	@OneToOne(mappedBy = "pessoa")
 	private Veiculo veiculo;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy = "pessoa")
 	private List<Multa> multas  = new ArrayList<>(); 
-	
-	//@OneToOne(cascade=CascadeType.ALL, mappedBy="pontuacao")
-	//private Pontuacao pontuacao;
-	
+		
 	public Pessoa() {
 	}
 

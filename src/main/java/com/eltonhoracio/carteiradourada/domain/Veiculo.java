@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 import com.eltonhoracio.carteiradourada.domain.enums.TipoVeiculo;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Veiculo implements Serializable{
@@ -28,7 +28,7 @@ public class Veiculo implements Serializable{
 	private String cor;
 	private Integer especie;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="pessoa_id")
 	private Pessoa pessoa;

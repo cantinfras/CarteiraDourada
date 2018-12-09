@@ -11,16 +11,18 @@ import com.eltonhoracio.carteiradourada.domain.Multa;
 import com.eltonhoracio.carteiradourada.services.MultaService;
 
 @RestController
-@RequestMapping(value="/multa")
+@RequestMapping(value="/multas")
 public class MultaResource {
 	
 	@Autowired
 	private MultaService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Multa> find(@PathVariable Integer id) {
 		Multa obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
+	
+	
 
 }
