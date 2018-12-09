@@ -1,5 +1,6 @@
 package com.eltonhoracio.carteiradourada.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,10 @@ public class MultaService {
 		Optional <Multa> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + " Tipo: " + Multa.class.getName()));
+	}
+	
+	public List<Multa> findAll(){
+		return repo.findAll();
 	}
 
 }

@@ -1,9 +1,13 @@
 package com.eltonhoracio.carteiradourada.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.eltonhoracio.carteiradourada.domain.TipoMulta;
@@ -41,5 +45,14 @@ public class TipoMultaService {
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possível excluir um tipo de multa que está incluido em uma multa.");
 		}
+	}
+	
+	public List<TipoMulta> findAll(){
+		return repo.findAll();
+	}
+	
+	public Page<TipoMulta> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
 	}
 }
