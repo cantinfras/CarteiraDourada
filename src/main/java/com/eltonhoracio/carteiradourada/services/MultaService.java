@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.eltonhoracio.carteiradourada.domain.Multa;
-import com.eltonhoracio.carteiradourada.domain.TipoMulta;
 import com.eltonhoracio.carteiradourada.repositories.MultaRepository;
 import com.eltonhoracio.carteiradourada.services.exceptions.DataIntegrityException;
 import com.eltonhoracio.carteiradourada.services.exceptions.ObjectNotFoundException;
