@@ -2,13 +2,20 @@ package com.eltonhoracio.carteiradourada.dto;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.eltonhoracio.carteiradourada.domain.TipoMulta;
 
 public class TipoMultaDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=3, max=8, message="O tamanho deve serm entre 3 e 8 caracteres")
 	private String codigo;
+	
 	private String descricao;
 	private String infrator;
 	private Integer pontos;

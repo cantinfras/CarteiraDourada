@@ -3,6 +3,7 @@ package com.eltonhoracio.carteiradourada.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,7 +34,8 @@ public class TipoMultaResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody TipoMulta obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody TipoMultaDTO objDto){
+		TipoMulta obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.eltonhoracio.carteiradourada.domain.TipoMulta;
+import com.eltonhoracio.carteiradourada.dto.TipoMultaDTO;
 import com.eltonhoracio.carteiradourada.repositories.TipoMultaRepository;
 import com.eltonhoracio.carteiradourada.services.exceptions.DataIntegrityException;
 import com.eltonhoracio.carteiradourada.services.exceptions.ObjectNotFoundException;
@@ -54,5 +55,10 @@ public class TipoMultaService {
 	public Page<TipoMulta> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public TipoMulta fromDTO(TipoMultaDTO objDto) {
+		return new TipoMulta(objDto.getId(), objDto.getCodigo(),
+				objDto.getDescricao(), objDto.getInfrator(), objDto.getPontos());
 	}
 }
