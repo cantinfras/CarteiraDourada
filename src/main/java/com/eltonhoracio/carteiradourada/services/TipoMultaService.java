@@ -34,8 +34,9 @@ public class TipoMultaService {
 	}
 	
 	public TipoMulta update(TipoMulta obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		TipoMulta newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
@@ -60,5 +61,12 @@ public class TipoMultaService {
 	public TipoMulta fromDTO(TipoMultaDTO objDto) {
 		return new TipoMulta(objDto.getId(), objDto.getCodigo(),
 				objDto.getDescricao(), objDto.getInfrator(), objDto.getPontos());
+	}
+	
+	private void updateData(TipoMulta newObj, TipoMulta obj) {
+		newObj.setCodigo(obj.getCodigo());
+		newObj.setDescricao(obj.getDescricao());
+		newObj.setInfrator(obj.getInfrator());
+		newObj.setPontos(obj.getPontos());
 	}
 }

@@ -2,6 +2,7 @@ package com.eltonhoracio.carteiradourada.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -44,7 +45,7 @@ public class TipoMultaResource {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody TipoMulta obj, @PathVariable Integer id){
-		obj.setId(id);;
+		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
@@ -56,9 +57,10 @@ public class TipoMultaResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<TipoMulta>> findAll() {
-		List<TipoMulta> obj = service.findAll();
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<List<TipoMultaDTO>> findAll() {
+		List<TipoMulta> list = service.findAll();
+		List<TipoMultaDTO> listDto = list.stream().map(obj -> new TipoMultaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@RequestMapping(value="/page", method=RequestMethod.GET)

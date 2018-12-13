@@ -41,7 +41,7 @@ public class VeiculoResource {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Veiculo obj, @PathVariable Integer id){
-		obj.setId(id);;
+		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}

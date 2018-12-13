@@ -2,6 +2,9 @@ package com.eltonhoracio.carteiradourada.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -32,7 +35,8 @@ public class PessoaResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Pessoa obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody PessoaDTO objDto){
+		Pessoa obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -41,7 +45,7 @@ public class PessoaResource {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Pessoa obj, @PathVariable Integer id){
-		obj.setId(id);;
+		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
@@ -53,9 +57,10 @@ public class PessoaResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<Pessoa>> findAll() {
-		List<Pessoa> obj = service.findAll();
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<List<PessoaDTO>> findAll() {
+		List<Pessoa> list = service.findAll();
+		List<PessoaDTO> listDto = list.stream().map(obj -> new PessoaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@RequestMapping(value="/page", method=RequestMethod.GET)

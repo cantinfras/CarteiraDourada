@@ -3,6 +3,8 @@ package com.eltonhoracio.carteiradourada.resources;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.eltonhoracio.carteiradourada.domain.Multa;
 import com.eltonhoracio.carteiradourada.dto.MultaDTO;
+import com.eltonhoracio.carteiradourada.dto.MultaNewDTO;
 import com.eltonhoracio.carteiradourada.services.MultaService;
 
 @RestController
@@ -32,7 +35,8 @@ public class MultaResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Multa obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody MultaNewDTO objDto){
+		Multa obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -41,7 +45,7 @@ public class MultaResource {
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Multa obj, @PathVariable Integer id){
-		obj.setId(id);;
+		obj.setId(id);
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}

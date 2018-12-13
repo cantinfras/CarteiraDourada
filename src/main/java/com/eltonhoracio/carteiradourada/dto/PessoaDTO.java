@@ -2,16 +2,34 @@ package com.eltonhoracio.carteiradourada.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.br.CPF;
+
 import com.eltonhoracio.carteiradourada.domain.Pessoa;
 
 public class PessoaDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=3, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String cnh;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@CPF
 	private String cpf;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Email(message="Email inválido")
 	private String email;
+	
 	private Integer pontuacao;
 	
 	public PessoaDTO() {
@@ -41,7 +59,7 @@ public class PessoaDTO implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	
 	public String getCnh() {
 		return cnh;
 	}
@@ -73,5 +91,4 @@ public class PessoaDTO implements Serializable{
 	public void setPontuacao(Integer pontuacao) {
 		this.pontuacao = pontuacao;
 	}
-	
 }

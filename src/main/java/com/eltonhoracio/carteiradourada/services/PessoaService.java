@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.eltonhoracio.carteiradourada.domain.Pessoa;
+import com.eltonhoracio.carteiradourada.dto.PessoaDTO;
 import com.eltonhoracio.carteiradourada.repositories.PessoaRepository;
 import com.eltonhoracio.carteiradourada.services.exceptions.DataIntegrityException;
 import com.eltonhoracio.carteiradourada.services.exceptions.ObjectNotFoundException;
@@ -33,8 +34,9 @@ public class PessoaService {
 	}
 	
 	public Pessoa update(Pessoa obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Pessoa newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
@@ -54,6 +56,19 @@ public class PessoaService {
 	public Page<Pessoa> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	public Pessoa fromDTO(PessoaDTO objDto) {
+		return new Pessoa(objDto.getId(), objDto.getNome(), objDto.getCnh(),
+				objDto.getCpf(), objDto.getEmail(), objDto.getPontuacao());
+	}
+	
+	private void updateData(Pessoa newObj, Pessoa obj) {
+		newObj.setNome(obj.getNome());
+		newObj.setCnh(obj.getCnh());
+		newObj.setCpf(obj.getCpf());
+		newObj.setEmail(obj.getEmail());
+		newObj.setPontuacao(obj.getPontuacao());
 	}
 
 }

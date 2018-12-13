@@ -11,7 +11,13 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.eltonhoracio.carteiradourada.domain.Multa;
+import com.eltonhoracio.carteiradourada.domain.Pessoa;
+import com.eltonhoracio.carteiradourada.domain.TipoMulta;
+import com.eltonhoracio.carteiradourada.dto.MultaDTO;
+import com.eltonhoracio.carteiradourada.dto.MultaNewDTO;
 import com.eltonhoracio.carteiradourada.repositories.MultaRepository;
+import com.eltonhoracio.carteiradourada.repositories.PessoaRepository;
+import com.eltonhoracio.carteiradourada.repositories.TipoMultaRepository;
 import com.eltonhoracio.carteiradourada.services.exceptions.DataIntegrityException;
 import com.eltonhoracio.carteiradourada.services.exceptions.ObjectNotFoundException;
 
@@ -21,6 +27,12 @@ public class MultaService {
 	@Autowired
 	private MultaRepository repo;
 	
+	@Autowired
+	private TipoMultaRepository tipoMultaRepository;
+	
+	@Autowired
+	private PessoaRepository pessoaRepository;
+	
 	public Multa find(Integer id) {
 		Optional <Multa> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -29,7 +41,9 @@ public class MultaService {
 	
 	public Multa insert(Multa obj) {
 		obj.setId(null);
-		return repo.save(obj);
+		obj = repo.save(obj);
+		pessoaRepository.save(obj.getPessoa());
+		return obj;
 	}
 	
 	public Multa update(Multa obj) {
@@ -55,5 +69,15 @@ public class MultaService {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
-
+	
+	public Multa fromDTO(MultaDTO objDto) {
+		return new Multa(objDto.getId(), objDto.getData(), null, null);
+	}
+	
+	public Multa fromDTO(MultaNewDTO objDto) {
+		Optional<TipoMulta> tipo = tipoMultaRepository.findById(objDto.getTipoId());
+		Optional<Pessoa> pessoa = pessoaRepository.findById(objDto.getPessoaId());
+		Multa multa = new Multa(null, objDto.getData(), tipo.get(), pessoa.get());
+		return multa;
+	}
 }

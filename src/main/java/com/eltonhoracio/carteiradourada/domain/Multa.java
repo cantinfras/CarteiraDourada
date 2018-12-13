@@ -26,7 +26,7 @@ public class Multa implements Serializable{
 	
 	
 	@ManyToOne
-	@JoinColumn(name="tipoMmulta_id")
+	@JoinColumn(name="tipo_multa_id")
 	private TipoMulta tipo;
 	
 	@JsonIgnore
@@ -62,7 +62,6 @@ public class Multa implements Serializable{
 		this.data = data;
 	}
 	
-
 	public TipoMulta getTipo() {
 		return tipo;
 	}
@@ -70,7 +69,7 @@ public class Multa implements Serializable{
 	public void setTipo(TipoMulta tipo) {
 		this.tipo = tipo;
 	}
-	
+
 	public Pessoa getPessoa() {
 		return pessoa;
 	}

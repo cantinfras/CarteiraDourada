@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Pessoa implements Serializable{
 	@OneToOne(mappedBy = "pessoa")
 	private Veiculo veiculo;
 	
-	@OneToMany(mappedBy = "pessoa")
+	@OneToMany(mappedBy = "pessoa", cascade=CascadeType.ALL)
 	private List<Multa> multas  = new ArrayList<>(); 
 		
 	public Pessoa() {
@@ -41,6 +42,7 @@ public class Pessoa implements Serializable{
 		this.cpf = cpf;
 		this.email = email;
 		this.pontuacao = pontuacao;
+		//O campo não pode ser nulo, usando operador ternario => this.pontuacao = (pontuacao==null) ? : pontuacao.getTotal();
 	}
 
 	public Integer getId() {
