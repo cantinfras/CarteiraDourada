@@ -58,7 +58,6 @@ public class DBService {
 		TipoMulta tipo16 = new TipoMulta(null, "508-82", "ENTREGAR VEICULO A PESSOA COM PPD DE CATEGORIA DIFERENTE DA DO VEICULO", "Condutor", 7);
 		TipoMulta tipo17 = new TipoMulta(null, "509-60", "ENTREGAR VEICULO A PESSOA COM CNH PPD VENCIDA HA MAIS DE 30 DIAS", "Condutor", 7);
 		
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		
 		Multa multa1 = new Multa(null, sdf.parse("01/12/2018"), tipo1, pessoa1);

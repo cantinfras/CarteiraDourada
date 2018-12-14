@@ -51,7 +51,7 @@ public class Pessoa implements Serializable{
 	public int getPontuacao() {
 		int soma = 0;
 		for(Multa multa : multas) {
-			soma = soma + multa.getTipo().getPontos();
+			soma = soma - multa.getTipo().getPontos();
 		}
 		return soma;
 	}
