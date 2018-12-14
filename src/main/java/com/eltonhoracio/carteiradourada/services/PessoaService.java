@@ -60,7 +60,7 @@ public class PessoaService {
 	
 	public Pessoa fromDTO(PessoaDTO objDto) {
 		return new Pessoa(objDto.getId(), objDto.getNome(), objDto.getCnh(),
-				objDto.getCpf(), objDto.getEmail(), objDto.getPontuacao());
+				objDto.getCpf(), objDto.getEmail());
 	}
 	
 	private void updateData(Pessoa newObj, Pessoa obj) {
@@ -68,7 +68,6 @@ public class PessoaService {
 		newObj.setCnh(obj.getCnh());
 		newObj.setCpf(obj.getCpf());
 		newObj.setEmail(obj.getEmail());
-		newObj.setPontuacao(obj.getPontuacao());
 	}
 
 }

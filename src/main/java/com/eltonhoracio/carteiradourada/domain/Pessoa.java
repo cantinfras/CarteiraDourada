@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,10 +21,13 @@ public class Pessoa implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@Column(unique = true)
 	private String cnh;
 	private String cpf;
+	
+	@Column(unique = true)
 	private String email;
-	private Integer pontuacao;
 	
 	@OneToOne(mappedBy = "pessoa")
 	private Veiculo veiculo;
@@ -34,15 +38,22 @@ public class Pessoa implements Serializable{
 	public Pessoa() {
 	}
 
-	public Pessoa(Integer id, String nome, String cnh, String cpf, String email, Integer pontuacao) {
+	public Pessoa(Integer id, String nome, String cnh, String cpf, String email) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cnh = cnh;
 		this.cpf = cpf;
 		this.email = email;
-		this.pontuacao = pontuacao;
 		//O campo não pode ser nulo, usando operador ternario => this.pontuacao = (pontuacao==null) ? : pontuacao.getTotal();
+	}
+	
+	public int getPontuacao() {
+		int soma = 0;
+		for(Multa multa : multas) {
+			soma = soma + multa.getTipo().getPontos();
+		}
+		return soma;
 	}
 
 	public Integer getId() {
@@ -99,14 +110,6 @@ public class Pessoa implements Serializable{
 
 	public void setMultas(List<Multa> multas) {
 		this.multas = multas;
-	}
-
-	public Integer getPontuacao() {
-		return pontuacao;
-	}
-
-	public void setPontuacao(Integer pontuacao) {
-		this.pontuacao = pontuacao;
 	}
 
 	@Override
