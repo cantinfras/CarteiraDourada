@@ -10,10 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
-import com.eltonhoracio.carteiradourada.domain.Multa;
 import com.eltonhoracio.carteiradourada.domain.TipoMulta;
 import com.eltonhoracio.carteiradourada.dto.TipoMultaDTO;
-import com.eltonhoracio.carteiradourada.repositories.MultaRepository;
 import com.eltonhoracio.carteiradourada.repositories.TipoMultaRepository;
 import com.eltonhoracio.carteiradourada.services.exceptions.DataIntegrityException;
 import com.eltonhoracio.carteiradourada.services.exceptions.ObjectNotFoundException;
@@ -23,9 +21,6 @@ public class TipoMultaService {
 	
 	@Autowired
 	private TipoMultaRepository repo;
-	
-	@Autowired
-	private MultaRepository multaRepository;
 	
 	public TipoMulta find(Integer id) {
 		Optional <TipoMulta> obj = repo.findById(id);
