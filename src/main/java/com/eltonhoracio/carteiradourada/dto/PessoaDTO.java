@@ -32,6 +32,8 @@ public class PessoaDTO implements Serializable{
 	
 	private Integer pontuacao;
 	
+	private String senha;
+	
 	public PessoaDTO() {
 	}
 	
@@ -42,6 +44,7 @@ public class PessoaDTO implements Serializable{
 		cpf = obj.getCpf();
 		email = obj.getEmail();
 		pontuacao = obj.getPontuacao();
+		senha = obj.getSenha();
 	}
 
 	public Integer getId() {
@@ -90,5 +93,13 @@ public class PessoaDTO implements Serializable{
 
 	public void setPontuacao(Integer pontuacao) {
 		this.pontuacao = pontuacao;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 }

@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.eltonhoracio.carteiradourada.domain.Multa;
@@ -21,6 +22,9 @@ import com.eltonhoracio.carteiradourada.repositories.VeiculoRepository;
 public class DBService {
 	
 	@Autowired
+	BCryptPasswordEncoder pe;
+	
+	@Autowired
 	private TipoMultaRepository tipoMultaRrepository;
 	@Autowired
 	private MultaRepository multaRepository;
@@ -31,8 +35,8 @@ public class DBService {
 	
 	public void instantiateTestDatabase() throws ParseException {
 	
-		Pessoa pessoa1 = new Pessoa(null, "Elton Horácio Ramos", "05525660112", "932.053.416-00", "eltonhr2@hotmail.com");
-		Pessoa pessoa2 = new Pessoa(null, "Rosa Maria Moreira", "07823391220", "034.116.186-12", "mmr17@gmail.com");
+		Pessoa pessoa1 = new Pessoa(null, "Elton Horácio Ramos", "05525660112", "932.053.416-00", "eltonhr2@hotmail.com", pe.encode("123"));
+		Pessoa pessoa2 = new Pessoa(null, "Rosa Maria Moreira", "07823391220", "034.116.186-12", "mmr17@gmail.com", pe.encode("321"));
 		
 		Veiculo veiculo1 = new Veiculo(null, "HIJ-1833", "00462282953", "9C2KC1670CR526817", "Honda", "Fan-150 ESDI", 2012, "Cinza", TipoVeiculo.MOTOCICLETA, pessoa1);
 		Veiculo veiculo2 = new Veiculo(null, "HJE-4493", "00462282953", "9C2KC1670CR526817", "Chevrolet", "Celta Spirit", 2008, "Cinza", TipoVeiculo.AUTOMOVEL, pessoa2);

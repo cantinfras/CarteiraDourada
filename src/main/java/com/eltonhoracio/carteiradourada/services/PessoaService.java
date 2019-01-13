@@ -8,6 +8,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.eltonhoracio.carteiradourada.domain.Pessoa;
@@ -18,6 +19,9 @@ import com.eltonhoracio.carteiradourada.services.exceptions.ObjectNotFoundExcept
 
 @Service
 public class PessoaService {
+	
+	@Autowired
+	private BCryptPasswordEncoder pe;
 	
 	@Autowired
 	private PessoaRepository repo;
@@ -60,7 +64,7 @@ public class PessoaService {
 	
 	public Pessoa fromDTO(PessoaDTO objDto) {
 		return new Pessoa(objDto.getId(), objDto.getNome(), objDto.getCnh(),
-				objDto.getCpf(), objDto.getEmail());
+				objDto.getCpf(), objDto.getEmail(), pe.encode(objDto.getSenha()));
 	}
 	
 	private void updateData(Pessoa newObj, Pessoa obj) {

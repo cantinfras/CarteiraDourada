@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Pessoa implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -29,6 +31,9 @@ public class Pessoa implements Serializable{
 	@Column(unique = true)
 	private String email;
 	
+	@JsonIgnore
+	private String senha;
+	
 	@OneToOne(mappedBy = "pessoa")
 	private Veiculo veiculo;
 	
@@ -38,13 +43,14 @@ public class Pessoa implements Serializable{
 	public Pessoa() {
 	}
 
-	public Pessoa(Integer id, String nome, String cnh, String cpf, String email) {
+	public Pessoa(Integer id, String nome, String cnh, String cpf, String email, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cnh = cnh;
 		this.cpf = cpf;
 		this.email = email;
+		this.senha = senha;
 		//O campo não pode ser nulo, usando operador ternario => this.pontuacao = (pontuacao==null) ? : pontuacao.getTotal();
 	}
 	
@@ -103,6 +109,14 @@ public class Pessoa implements Serializable{
 	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
 	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
 
 	public List<Multa> getMultas() {
 		return multas;
@@ -136,7 +150,4 @@ public class Pessoa implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-
 }
