@@ -12,6 +12,7 @@ import com.eltonhoracio.carteiradourada.domain.Multa;
 import com.eltonhoracio.carteiradourada.domain.Pessoa;
 import com.eltonhoracio.carteiradourada.domain.TipoMulta;
 import com.eltonhoracio.carteiradourada.domain.Veiculo;
+import com.eltonhoracio.carteiradourada.domain.enums.Perfil;
 import com.eltonhoracio.carteiradourada.domain.enums.TipoVeiculo;
 import com.eltonhoracio.carteiradourada.repositories.MultaRepository;
 import com.eltonhoracio.carteiradourada.repositories.PessoaRepository;
@@ -36,9 +37,12 @@ public class DBService {
 	public void instantiateTestDatabase() throws ParseException {
 	
 		Pessoa pessoa1 = new Pessoa(null, "Elton Horácio Ramos", "05525660112", "932.053.416-00", "eltonhr2@hotmail.com", pe.encode("123"));
+		pessoa1.addPerfil(Perfil.ADMIN);
+		
 		Pessoa pessoa2 = new Pessoa(null, "Rosa Maria Moreira", "07823391220", "034.116.186-12", "mmr17@gmail.com", pe.encode("321"));
 		
 		Veiculo veiculo1 = new Veiculo(null, "HIJ-1833", "00462282953", "9C2KC1670CR526817", "Honda", "Fan-150 ESDI", 2012, "Cinza", TipoVeiculo.MOTOCICLETA, pessoa1);
+		
 		Veiculo veiculo2 = new Veiculo(null, "HJE-4493", "00462282953", "9C2KC1670CR526817", "Chevrolet", "Celta Spirit", 2008, "Cinza", TipoVeiculo.AUTOMOVEL, pessoa2);
 		
 		pessoaRepository.saveAll(Arrays.asList(pessoa1, pessoa2));
