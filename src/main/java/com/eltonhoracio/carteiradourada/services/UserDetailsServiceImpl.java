@@ -21,8 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		Pessoa pes = repo.findByEmail(email);
 		if(pes == null) {
 			throw new UsernameNotFoundException(email);
-		}
-		
+		}		
 		return new UserSS(pes.getId(), pes.getEmail(), pes.getSenha(), pes.getPerfis());
 	}
 
