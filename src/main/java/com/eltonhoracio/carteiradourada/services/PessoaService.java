@@ -12,8 +12,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.eltonhoracio.carteiradourada.domain.Pessoa;
+import com.eltonhoracio.carteiradourada.domain.enums.Perfil;
 import com.eltonhoracio.carteiradourada.dto.PessoaDTO;
 import com.eltonhoracio.carteiradourada.repositories.PessoaRepository;
+import com.eltonhoracio.carteiradourada.security.UserSS;
+import com.eltonhoracio.carteiradourada.services.exceptions.AuthorizationException;
 import com.eltonhoracio.carteiradourada.services.exceptions.DataIntegrityException;
 import com.eltonhoracio.carteiradourada.services.exceptions.ObjectNotFoundException;
 
@@ -27,6 +30,11 @@ public class PessoaService {
 	private PessoaRepository repo;
 	
 	public Pessoa find(Integer id) {
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional <Pessoa> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + " Tipo: " + Pessoa.class.getName()));
