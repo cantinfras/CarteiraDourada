@@ -29,14 +29,13 @@ public class TipoMultaResource {
 	@Autowired
 	private TipoMultaService service;
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<TipoMulta> find(@PathVariable Integer id) {
 		TipoMulta obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody TipoMultaDTO objDto){
 		TipoMulta obj = service.fromDTO(objDto);
@@ -46,7 +45,7 @@ public class TipoMultaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody TipoMulta obj, @PathVariable Integer id){
 		obj.setId(id);
@@ -54,14 +53,13 @@ public class TipoMultaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.GET)
 	public ResponseEntity<List<TipoMultaDTO>> findAll() {
 		List<TipoMulta> list = service.findAll();
@@ -69,7 +67,6 @@ public class TipoMultaResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
-	//@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/page", method=RequestMethod.GET)
 	public ResponseEntity<Page<TipoMultaDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 

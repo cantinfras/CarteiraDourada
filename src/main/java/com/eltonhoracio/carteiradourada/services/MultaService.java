@@ -18,6 +18,8 @@ import com.eltonhoracio.carteiradourada.dto.MultaNewDTO;
 import com.eltonhoracio.carteiradourada.repositories.MultaRepository;
 import com.eltonhoracio.carteiradourada.repositories.PessoaRepository;
 import com.eltonhoracio.carteiradourada.repositories.TipoMultaRepository;
+import com.eltonhoracio.carteiradourada.security.UserSS;
+import com.eltonhoracio.carteiradourada.services.exceptions.AuthorizationException;
 import com.eltonhoracio.carteiradourada.services.exceptions.DataIntegrityException;
 import com.eltonhoracio.carteiradourada.services.exceptions.ObjectNotFoundException;
 
@@ -66,8 +68,14 @@ public class MultaService {
 	}
 	
 	public Page<Multa> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		@SuppressWarnings("deprecation")
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repo.findAll(pageRequest);
+		Optional<Pessoa> pessoa = pessoaRepository.findById(user.getId());
+		return repo.findByPessoa(pessoa, pageRequest);
 	}
 	
 	public Multa fromDTO(MultaDTO objDto) {
