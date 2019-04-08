@@ -1,5 +1,6 @@
 package com.eltonhoracio.carteiradourada.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.eltonhoracio.carteiradourada.domain.Pessoa;
 import com.eltonhoracio.carteiradourada.domain.enums.Perfil;
@@ -28,6 +30,9 @@ public class PessoaService {
 	
 	@Autowired
 	private PessoaRepository repo;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	public Pessoa find(Integer id) {
 		UserSS user = UserService.authenticated();
@@ -81,6 +86,10 @@ public class PessoaService {
 		newObj.setCnh(obj.getCnh());
 		newObj.setCpf(obj.getCpf());
 		newObj.setEmail(obj.getEmail());
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 
 }
